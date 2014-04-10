@@ -45,7 +45,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;C:\OpenCV\build\include</IncludePath>
-    <LibraryPath>$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib;C:\OpenCV\build\x86\vc10\lib;C:\OpenCV\build\bin\Debug</LibraryPath>
+    <LibraryPath>$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib;C:\OpenCV\build\x86\vc10\lib;C:\OpenCV\build\bin\Release</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -59,8 +59,11 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>"C:\OpenCV\build\lib\Debug\opencv_core246d.lib";"C:\OpenCV\build\lib\Debug\opencv_highgui246d.lib";"C:\OpenCV\build\lib\Debug\opencv_video246d.lib";"C:\OpenCV\build\lib\Debug\opencv_ml246d.lib";"C:\OpenCV\build\lib\Debug\opencv_legacy246d.lib";"C:\OpenCV\build\lib\Debug\opencv_imgproc246d.lib";"C:\OpenCV\build\lib\Debug\opencv_calib3d246d.lib";"C:\OpenCV\build\lib\Debug\opencv_contrib246d.lib";"C:\OpenCV\build\lib\Debug\opencv_features2d246d.lib";"C:\OpenCV\build\lib\Debug\opencv_flann246d.lib";"C:\OpenCV\build\lib\Debug\opencv_gpu246d.lib";"C:\OpenCV\build\lib\Debug\opencv_haartraining_engined.lib";"C:\OpenCV\build\lib\Debug\opencv_objdetect246d.lib";"C:\OpenCV\build\lib\Debug\opencv_ts246d.lib";"C:\OpenCV\build\lib\Debug\opencv_nonfree246d.lib";"C:\OpenCV\build\lib\Debug\opencv_photo246d.lib";"C:\OpenCV\build\lib\Debug\opencv_stitching246d.lib";"C:\OpenCV\build\lib\Debug\opencv_videostab246d.lib";"C:\OpenCV\build\cvblob\x86\lib\cvblob.lib";"C:\OpenCV\build\cvblob\x86\lib\cvblobd.lib";%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>"C:\OpenCV\build\lib\Debug\opencv_core246d.lib";"C:\OpenCV\build\lib\Debug\opencv_highgui246d.lib";"C:\OpenCV\build\lib\Debug\opencv_video246d.lib";"C:\OpenCV\build\lib\Debug\opencv_ml246d.lib";"C:\OpenCV\build\lib\Debug\opencv_legacy246d.lib";"C:\OpenCV\build\lib\Debug\opencv_imgproc246d.lib";"C:\OpenCV\build\lib\Debug\opencv_calib3d246d.lib";"C:\OpenCV\build\lib\Debug\opencv_contrib246d.lib";"C:\OpenCV\build\lib\Debug\opencv_features2d246d.lib";"C:\OpenCV\build\lib\Debug\opencv_flann246d.lib";"C:\OpenCV\build\lib\Debug\opencv_gpu246d.lib";"C:\OpenCV\build\lib\Debug\opencv_haartraining_engined.lib";"C:\OpenCV\build\lib\Debug\opencv_objdetect246d.lib";"C:\OpenCV\build\lib\Debug\opencv_ts246d.lib";"C:\OpenCV\build\lib\Debug\opencv_nonfree246d.lib";"C:\OpenCV\build\lib\Debug\opencv_photo246d.lib";"C:\OpenCV\build\lib\Debug\opencv_stitching246d.lib";"C:\OpenCV\build\lib\Debug\opencv_videostab246d.lib";"C:\OpenCV\build\cvblob\x86\lib\cvblob.lib";"C:\OpenCV\build\cvblob\x86\lib\cvblobd.lib";"C:\Users\N1\Desktop\OpenCV_PostProcessing1\Debug\Tracker.lib";%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\OpenCV\build\bin\Debug;C:\OpenCV\build\cvblob\x86\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -79,8 +82,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\OpenCV\build\bin\Debug;C:\OpenCV\build\cvblob\x86\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>"C:\OpenCV\build\lib\Debug\opencv_core246d.lib";"C:\OpenCV\build\lib\Debug\opencv_highgui246d.lib";"C:\OpenCV\build\lib\Debug\opencv_video246d.lib";"C:\OpenCV\build\lib\Debug\opencv_ml246d.lib";"C:\OpenCV\build\lib\Debug\opencv_legacy246d.lib";"C:\OpenCV\build\lib\Debug\opencv_imgproc246d.lib";"C:\OpenCV\build\lib\Debug\opencv_calib3d246d.lib";"C:\OpenCV\build\lib\Debug\opencv_contrib246d.lib";"C:\OpenCV\build\lib\Debug\opencv_features2d246d.lib";"C:\OpenCV\build\lib\Debug\opencv_flann246d.lib";"C:\OpenCV\build\lib\Debug\opencv_gpu246d.lib";"C:\OpenCV\build\lib\Debug\opencv_haartraining_engined.lib";"C:\OpenCV\build\lib\Debug\opencv_objdetect246d.lib";"C:\OpenCV\build\lib\Debug\opencv_ts246d.lib";"C:\OpenCV\build\lib\Debug\opencv_nonfree246d.lib";"C:\OpenCV\build\lib\Debug\opencv_photo246d.lib";"C:\OpenCV\build\lib\Debug\opencv_stitching246d.lib";"C:\OpenCV\build\lib\Debug\opencv_videostab246d.lib";"C:\OpenCV\build\cvblob\x86\lib\cvblob.lib";"C:\OpenCV\build\cvblob\x86\lib\cvblobd.lib";%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\OpenCV\build\bin\Release;C:\OpenCV\build\cvblob\x86\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>"C:\OpenCV\build\lib\Release\opencv_core246.lib";"C:\OpenCV\build\lib\Release\opencv_highgui246.lib";"C:\OpenCV\build\lib\Release\opencv_video246.lib";"C:\OpenCV\build\lib\Release\opencv_ml246.lib";"C:\OpenCV\build\lib\Release\opencv_legacy246.lib";"C:\OpenCV\build\lib\Release\opencv_imgproc246.lib";"C:\OpenCV\build\lib\Release\opencv_calib3d246.lib";"C:\OpenCV\build\lib\Release\opencv_contrib246.lib";"C:\OpenCV\build\lib\Release\opencv_features2d246.lib";"C:\OpenCV\build\lib\Release\opencv_flann246.lib";"C:\OpenCV\build\lib\Release\opencv_gpu246.lib";"C:\OpenCV\build\lib\Release\opencv_haartraining_engine.lib";"C:\OpenCV\build\lib\Release\opencv_objdetect246.lib";"C:\OpenCV\build\lib\Release\opencv_ts246.lib";"C:\OpenCV\build\lib\Release\opencv_nonfree246.lib";"C:\OpenCV\build\lib\Release\opencv_photo246.lib";"C:\OpenCV\build\lib\Release\opencv_stitching246.lib";"C:\OpenCV\build\lib\Release\opencv_videostab246.lib";"C:\OpenCV\build\cvblob\x86\lib\cvblob.lib";"C:\OpenCV\build\cvblob\x86\lib\cvblobd.lib";%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

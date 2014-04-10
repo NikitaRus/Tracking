@@ -1,9 +1,12 @@
 //#include "class.h"
-#include <opencv.hpp>
+//#include <opencv.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+//#include <opencv2/core/core.hpp>
 
 //mp4
-#include <opencv2/nonfree/features2d.hpp>
-#include <opencv2/features2d/features2d.hpp>
+//#include <opencv2/nonfree/features2d.hpp>
+//#include <opencv2/features2d/features2d.hpp>
 
 #pragma omp parallel
 #pragma omp parallel for
@@ -28,6 +31,7 @@ bool drawobject = false;
 
 //Object
 Rect object;
+vector<Rect> objects;
 
 //ROI
 Rect ROI;
@@ -46,17 +50,21 @@ vector<Point> detectedPixels;
 vector<bool> detectedBool;
 
 //Names
-const cv::string wnVideo = "Video1";
-const cv::string wnControls = "Controls";
-const cv::string msg1 = "Activos: ";
-const cv::string msg2 = " / ";
-const cv::string msg3 = " RPS: ";
+std::string wnVideo = "Video1";
+std::string wnControls = "Controls";
+std::string msg1 = "Activos: ";
+std::string msg2 = " / ";
+std::string msg3 = "RPS: ";
 
 #include <time.h>
 //FPS
 clock_t bench_start = clock(), bench_finish;
 double bench_result;
 int fps=0, tfps=0;
+
+//Mensajes
+std::string cantName;
+std::string fpsName;
 
 //Tracker
 int totalDetected;
@@ -138,12 +146,12 @@ void processROI()
 	{
 		totalDetected = 0;
 		//Draw working square
-		rectangle(frame, ROI, blue, 2, 3);
+		//rectangle(frame, ROI, blue, 2, 3);
 
 		detectedPixels.clear();
 		detectedBool.clear();
-		for(int x = ROI.x; x <= ROI.x + ROI.width; x+= 2)
-			for(int y = ROI.y; y <= ROI.y + ROI.height; y+= 2)
+		for(int x = ROI.x; x <= ROI.x + ROI.width; x+= 3)
+			for(int y = ROI.y; y <= ROI.y + ROI.height; y+= 3)
 			{
 				//Get pixel HSV values 0-255  0.0-1.0  0.0-1.0
 				int cHue = s[0].at<uchar>(Point(x, y));
@@ -182,7 +190,7 @@ void processROI()
 void meassureDistances()
 {
 
-	if(detectedPixels.size() > 2)
+	if(detectedPixels.size() > 0)
 	{
 		int detectedNum = 0;
 		int erased = 0;
@@ -193,6 +201,8 @@ void meassureDistances()
 		*/
 		for(vector<Point>::iterator it = detectedPixels.begin(); it != detectedPixels.end(); ++it)
 		{
+			detectedNum++;
+
 			Point P = point;
 			Point C = *it;
 
@@ -217,34 +227,34 @@ void meassureDistances()
 				{
 					double distanceFromP = sqrt(pow(dstX, 2) + pow(dstY, 2));
 
-					if(distanceFromP < (object.width+object.height)/2/2.4)
+					if(distanceFromP < (object.width+object.height)/2/3)
 					{
-						
-						if(detectedNum < detectedPixels.size() - erased)
+						if(detectedNum < detectedPixels.size())
 						{
-							erased++;
+							
 							std::vector<bool>::iterator it2 = detectedBool.begin();
 							std::advance(it2, detectedNum);
 
 							it2 = detectedBool.erase(it2);
-							it = detectedPixels.erase(it);
+							detectedPixels.erase(it);
 						}
+						erased++;
 					}
 					else if(distanceFromP > (object.width+object.height)/2*1.3)
 					{
 						
-						if(detectedNum < detectedPixels.size() - erased)
+						if(detectedNum < detectedPixels.size())
 						{
-							erased++;
+							
 							std::vector<bool>::iterator it2 = detectedBool.begin();
 							std::advance(it2, detectedNum);
 
 							it2 = detectedBool.erase(it2);
-							it = detectedPixels.erase(it);
+							detectedPixels.erase(it);
 						}
+						erased++;
 					}
 
-					detectedNum++;
 				}
 
 		}
@@ -328,33 +338,34 @@ void findObject()
 	}
 
 
-#ifdef _DEBUG
+//#ifdef _DEBUG
 		//Prueba de FPS
 		std::stringstream cant_stream;
-		cant_stream << msg1 << cant << msg2 << detectedPixels.size() << msg2 << totalDetected;
-		string cantName = cant_stream.str();
-		
 		std::stringstream rps_stream;
-		rps_stream << msg3 << fps;
-		string fpsName = rps_stream.str();
-		
-		int fontFace = CV_FONT_HERSHEY_SIMPLEX;
 
-		cv::putText(frame, cantName, Point(15, 15), fontFace, 0.6,
-			green, 2, 8);
-		cv::putText(frame, fpsName, Point(450, 15), fontFace, 0.6,
-			green, 2, 8);
+		int fontFace = CV_FONT_HERSHEY_SIMPLEX;
 
 		double current_clock = clock();
 
 		if(current_clock - bench_start >= CLOCKS_PER_SEC)
 		{
+			cant_stream << msg1 << cant << msg2 << detectedPixels.size() << msg2 << totalDetected;
+			rps_stream << msg3 << fps;
+
+			cantName = cant_stream.str();
+			fpsName = rps_stream.str();
+
 			fps = tfps;
 			tfps = 0;
 			current_clock = 0;
 			bench_start = clock();
 		}
-#endif
+
+		cv::putText(frame, cantName, Point(15, 15), fontFace, 0.6,
+			green, 2, 8);
+		cv::putText(frame, fpsName, Point(450, 15), fontFace, 0.6,
+			green, 2, 8);
+//#endif
 
 	if(cant > 0)
 	{
@@ -377,8 +388,29 @@ void findObject()
 
 		setROI(avgPoint);
 
-		object = Rect(object.x - 10, object.y - 10, object.width + 10, object.height + 10);
-		rectangle(frame, object, red, 2, 3);
+		object = Rect(object.x, object.y, object.width + 10, object.height + 10);
+		
+		objects.push_back(object);
+		if(objects.size() > 3)
+			objects.erase(objects.begin());
+
+		Rect avgObjectS;
+		for(vector<Rect>::iterator r = objects.begin(); r != objects.end(); r++)
+		{
+			Rect tmpObj = *r;
+			avgObjectS.x += tmpObj.x;
+			avgObjectS.y += tmpObj.y;
+			avgObjectS.width += tmpObj.width;
+			avgObjectS.height += tmpObj.height;
+		}
+
+		avgObjectS.x /= objects.size();
+		avgObjectS.y /= objects.size();
+		avgObjectS.width /= objects.size();
+		avgObjectS.height /= objects.size();
+		
+
+		rectangle(frame, avgObjectS, red, 2, 3);
 		circle(frame, avgPoint, 5, green, 2, 8);
 	}
 }
@@ -424,7 +456,7 @@ int main()
 		processROI();
 		imshow(wnVideo, src);
 		tfps++;
-		waitKey(16);
+		waitKey(5);
 	}
 
 	return 0;
